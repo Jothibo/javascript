@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content=" Creating a  Grocery list" />
+    <title>Creating a Grocery list</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      .section-center {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      h3 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      .form-control input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .form-control button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .grocery-container {
+        margin-top: 20px;
+      }
+
+      .grocery-list {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .grocery-list article {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .grocery-list article p {
+        margin: 0;
+        flex: 1;
+      }
+
+      .grocery-list article .btn-container {
+        display: flex;
+      }
+
+      .grocery-list article button {
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .grocery-list article button i {
+        color: #888;
+      }
+
+      .clear-btn {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #f44336;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .alert {
+        color: red;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section-center">
+      <form class="grocery-form">
+        <p class="alert"></p>
+        <h3>grocery bud</h3>
+        <div class="form-control">
+          <input type="text" id="grocery" placeholder="e.g. eggs" />
+          <button type="submit" class="submit-btn">submit</button>
+        </div>
+      </form>
+
+      <div class="grocery-container">
+        <div class="grocery-list"></div>
+        <button class="clear-btn">clear items</button>
+      </div>
+    </section>
+
+    <script>
+      const form = document.querySelector(".grocery-form");
+      const groceryInput = document.getElementById("grocery");
+      const groceryList = document.querySelector(".grocery-list");
+      const alertMessage = document.querySelector(".alert");
+      const clearBtn = document.querySelector(".clear-btn");
+
+      let editElement;
+      let editFlag = false;
+      let editID = "";
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const groceryValue = groceryInput.value;
+        if (groceryValue && groceryValue.trim() !== "") {
+          if (editFlag) {
+            editElement.textContent = groceryValue;
+            setBackToDefault();
+          } else {
+            const groceryItem = document.createElement("article");
+            const attr = document.createAttribute("data-id");
+            attr.value = new Date().getTime().toString();
+            groceryItem.setAttributeNode(attr);
+            groceryItem.innerHTML = `
+              <p>${groceryValue}</p>
+              <div class="btn-container">
+                <button type="button" class="edit-btn">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="delete-btn">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            `;
+            const deleteBtn = groceryItem.querySelector(".delete-btn");
+            const editBtn = groceryItem.querySelector(".edit-btn");
+
+            deleteBtn.addEventListener("click", deleteItem);
+            editBtn.addEventListener("click", editItem);
+
+            groceryList.appendChild(groceryItem);
+          }
+          groceryInput.value = "";
+          alertMessage.textContent = "";
+        } else {
+          alertMessage.textContent = "Please enter a valid item.";
+        }
+      });
+
+      clearBtn.addEventListener("click", function () {
+        const groceryItems = document.querySelectorAll("article");
+        if (groceryItems.length > 0) {
+          groceryItems.forEach(function (item) {
+            groceryList.removeChild(item);
+          });
+        }
+      });
+
+      function deleteItem(e) {
+        const element = e.currentTarget.parentElement.parentElement;
+        groceryList.removeChild(element);
+      }
+
+      function editItem(e) {
+        const element = e.currentTarget.parentElement.parentElement;
+        editElement = e.currentTarget.parentElement.previousElementSibling;
+        groceryInput.value = editElement.textContent;
+        editFlag = true;
+        editID = element.dataset.id;
+        form.querySelector(".submit-btn").textContent = "edit";
+      }
+
+      function setBackToDefault() {
+        groceryInput.value = "";
+        editFlag = false;
+        editID = "";
+        form.querySelector(".submit-btn").textContent = "submit";
+      }
+    </script>
+  </body>
+</html>

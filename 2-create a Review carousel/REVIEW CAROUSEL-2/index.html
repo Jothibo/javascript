@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Review Carousel" />
+    <title>Review Carousel</title>
+
+    <style>
+      #carousel {
+        width: 600px;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .review {
+        width: 500px;
+        height: 200px;
+        padding: 50px;
+        display: none;
+      }
+
+      .review h3 {
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+      }
+
+      .review p {
+        font-size: 18px;
+        color: #666;
+      }
+
+      button {
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      #nextBtn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      #prevBtn {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="carousel">
+      <div class="review">
+        <h3>Review 1</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+          venenatis, metus eu rutrum dapibus, metus nunc sodales mi, vel mattis
+          dolor tortor ac turpis.
+        </p>
+      </div>
+      <div class="review">
+        <h3>Review 2</h3>
+        <p>
+          Quisque placerat scelerisque mauris non ullamcorper. Mauris sed ligula
+          aliquam, finibus tellus vel, euismod justo.
+        </p>
+      </div>
+      <div class="review">
+        <h3>Review 3</h3>
+        <p>
+          Suspendisse non lectus facilisis, scelerisque orci vitae, convallis
+          ipsum. Duis efficitur sapien non libero ultricies finibus.
+        </p>
+      </div>
+      <div class="review">
+        <h3>Review 4</h3>
+        <p>
+          Etiam commodo tortor nec bibendum ullamcorper. Integer hendrerit, nisl
+          ut efficitur tristique, sapien quam pellentesque urna, in interdum
+          lacus felis et urna.
+        </p>
+      </div>
+    </div>
+    <button id="nextBtn">Next</button>
+    <button id="prevBtn">Previous</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.getElementById("carousel");
+        const reviews = carousel.getElementsByClassName("review");
+        let currentReview = 0;
+
+        // Show initial review
+        reviews[currentReview].style.display = "block";
+
+        // Event listener for next button
+        document
+          .getElementById("nextBtn")
+          .addEventListener("click", function () {
+            // Hide current review
+            reviews[currentReview].style.display = "none";
+
+            // Move to the next review
+            currentReview = (currentReview + 1) % reviews.length;
+
+            // Show next review
+            reviews[currentReview].style.display = "block";
+          });
+
+        // Event listener for previous button
+        document
+          .getElementById("prevBtn")
+          .addEventListener("click", function () {
+            // Hide current review
+            reviews[currentReview].style.display = "none";
+
+            // Move to the previous review
+            currentReview =
+              (currentReview - 1 + reviews.length) % reviews.length;
+
+            // Show previous review
+            reviews[currentReview].style.display = "block";
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content=" Counter App" />
+    <title>Counter App</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      .container {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container h1 {
+        margin: 30px;
+      }
+
+      .counter {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+      }
+
+      #increment-btn,
+      #decrement-btn,
+      #reset {
+        height: 50px;
+        width: 120px;
+        padding: 0 40px;
+        border-radius: 10px;
+        font-size: 40px;
+        background-color: #2e8d46;
+        border: 2px solid #2e8d46;
+        color: white;
+        margin: 20px;
+      }
+
+      #counter-value {
+        font-size: 50px;
+      }
+
+      #reset {
+        height: 50px;
+        min-width: 120px;
+        border-radius: 10px;
+        background-color: palevioletred;
+        margin-top: 20px;
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Counter App</h1>
+      <div class="counter">
+        <!-- use querySelectorAll to select all elements with the class "counter" -->
+        <button id="increment-btn">+</button>
+        <div id="counter-value">0</div>
+        <button id="decrement-btn">-</button>
+      </div>
+      <button id="reset">Reset</button>
+    </div>
+    <script>
+      // create a counter variable and initialize it to zero
+      let counter = 0;
+
+      // use querySelector to select the element with the id "counter-value"
+      const counterValue = document.getElementById("counter-value");
+
+      // use querySelector to select the element with the id "increment-btn"
+      const incrementBtn = document.getElementById("increment-btn");
+
+      // use querySelector to select the element with the id "decrement-btn"
+      const decrementBtn = document.getElementById("decrement-btn");
+
+      // use querySelector to select the element with the id "reset"
+      const resetBtn = document.getElementById("reset");
+
+      // use addEventListener to add a click event listener to the increment button
+      incrementBtn.addEventListener("click", () => {
+        // increment the counter by one
+        counter++;
+        // update the text content of the counter value element
+        counterValue.textContent = counter;
+        // toggle the class "active" on the counter value element
+        counterValue.classList.toggle("active");
+      });
+
+      // use addEventListener to add a click event listener to the decrement button
+      decrementBtn.addEventListener("click", () => {
+        // decrement the counter by one
+        counter--;
+        // update the text content of the counter value element
+        counterValue.textContent = counter;
+        // toggle the class "active" on the counter value element
+        counterValue.classList.toggle("active");
+      });
+
+      // use addEventListener to add a click event listener to the reset button
+      resetBtn.addEventListener("click", () => {
+        // reset the counter to zero
+        counter = 0;
+        // update the text content of the counter value element
+        counterValue.textContent = counter;
+        // remove the class "active" from the counter value element
+        counterValue.classList.remove("active");
+      });
+    </script>
+  </body>
+</html>

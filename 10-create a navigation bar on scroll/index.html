@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Creating a navigation bar" />
+    <title>Creating a navigation bar</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      #navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: grey;
+        color: white;
+        height: 50px;
+      }
+
+      #navbar a {
+        text-decoration: none;
+        color: white;
+        line-height: 50px;
+      }
+
+      #navbar a.active {
+        background-color: #4caf50;
+      }
+
+      #navbar.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      #main {
+        padding-top: 50px;
+      }
+
+      section {
+        height: 500px;
+        padding: 20px;
+        border-bottom: 1px solid black;
+      }
+
+      section#home {
+        background-color: red;
+      }
+
+      section#about {
+        background-color: yellow;
+      }
+
+      section#services {
+        background-color: orange;
+      }
+
+      section#contact {
+        background-color: green;
+      }
+
+      #footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #333;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div id="main">
+      <section id="home">
+        <h1>Home</h1>
+        <p>This is the home section.</p>
+      </section>
+      <section id="about">
+        <h1>About</h1>
+        <p>This is the about section.</p>
+      </section>
+      <section id="services">
+        <h1>Services</h1>
+        <p>This is the services section.</p>
+      </section>
+      <section id="contact">
+        <h1>Contact</h1>
+        <p>This is the contact section.</p>
+      </section>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+      // Get the navigation bar element
+      var navbar = document.getElementById("navbar");
+
+      // Get the current year and display it in the footer
+      var year = new Date().getFullYear();
+      document.getElementById("footer").innerHTML = "© " + year;
+
+      // Get the initial position of the navbar
+      var initialPos = navbar.getBoundingClientRect().top;
+
+      // Add a scroll event listener to the window
+      window.addEventListener("scroll", function () {
+        // Get the current scroll position
+        var scrollPos = window.pageYOffset;
+
+        // If the scroll position is greater than the initial position, add a sticky class to the navbar
+        if (scrollPos > initialPos) {
+          navbar.classList.add("sticky");
+        } else {
+          // Otherwise, remove the sticky class
+          navbar.classList.remove("sticky");
+        }
+      });
+
+      // Get all the links in the navbar
+      var links = navbar.getElementsByTagName("a");
+
+      // Loop through the links and add a click event listener to each one
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function (event) {
+          // Prevent the default behavior of the link
+          event.preventDefault();
+
+          // Get the target element of the link by slicing the hash symbol from its href attribute
+          var target = document.getElementById(
+            this.href.slice(this.href.indexOf("#") + 1)
+          );
+
+          // Scroll to the target element with a smooth behavior
+          window.scrollTo({
+            top: target.offsetTop,
+            behavior: "smooth",
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

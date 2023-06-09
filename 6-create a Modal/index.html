@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create a Model" />
+    <title>Create a Model</title>
+    <style>
+      .modal-container {
+        display: none;
+
+        background: url("./three.jpg");
+        background-size: cover;
+        background-position: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+      }
+
+      .modal-container.open {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="modalButton">Open Modal</button>
+
+    <div id="modal" class="modal-container">
+      <h3>Modal Content</h3>
+      <button id="closeButton">Close</button>
+    </div>
+
+    <script>
+      const modalButton = document.querySelector("#modalButton");
+      const modal = document.querySelector("#modal");
+      const closeButton = document.querySelector("#closeButton");
+
+      modalButton.addEventListener("click", function () {
+        modal.classList.add("open");
+      });
+
+      closeButton.addEventListener("click", function () {
+        modal.classList.remove("open");
+      });
+    </script>
+  </body>
+</html>
